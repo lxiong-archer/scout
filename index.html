@@ -11,17 +11,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --white:       #FFFFFF;
-      --sand:        #E5E0D9;
-      --sand-light:  #F2EFEB;
-      --sand-dark:   #D8D2C9;
-      --black:       #000000;
-      --gray:        #807A70;
-      --gray-light:  #B0AAA0;
+      --white:      #FFFFFF;
+      --sand:       #E5E0D9;
+      --sand-light: #F2EFEB;
+      --sand-dark:  #D8D2C9;
+      --black:      #000000;
+      --gray:       #807A70;
+      --gray-light: #B0AAA0;
     }
 
     html, body {
-      background: var(--white);
+      background: var(--sand);
       color: var(--black);
       font-family: 'Archivo', 'Inter', sans-serif;
       font-weight: 100;
@@ -32,16 +32,17 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--white);
       border-bottom: 1px solid var(--sand-dark);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
     }
 
-    /* Row 1 — title */
+    /* Row 1 — title: crisp white */
     .topbar-title-row {
       display: flex;
       align-items: center;
       height: 44px;
       padding: 0 24px;
+      background: var(--white);
       border-bottom: 1px solid var(--sand);
     }
     .topbar-title-row span {
@@ -51,36 +52,35 @@
       text-transform: uppercase;
     }
 
-    /* Rows 2 & 3 — labeled filter rows */
+    /* Rows 2 & 3 — filter rows: warm sand tint */
     .filter-row {
       display: flex;
       align-items: stretch;
-      padding: 0 0 0 24px;
-      border-bottom: 1px solid var(--sand);
+      background: var(--sand-light);
       min-height: 40px;
     }
-    .filter-row:last-child { border-bottom: none; }
+    .filter-row + .filter-row {
+      border-top: 1px solid var(--sand);
+    }
 
+    /* Label — no divider line; just small muted caps with extra spacing */
     .row-label {
       font-weight: 700;
-      font-size: 9px;
-      letter-spacing: 0.18em;
+      font-size: 8px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gray-light);
       display: flex;
       align-items: center;
-      padding-right: 16px;
-      border-right: 1px solid var(--sand);
-      margin-right: 4px;
+      padding: 0 20px 0 24px;
       flex-shrink: 0;
-      min-width: 52px;
+      min-width: 68px;
     }
 
-    /* ── TAB BUTTONS (app row) ───────────────────────────── */
+    /* ── APP TABS ────────────────────────────────────────── */
     .tab-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 0;
       flex: 1;
     }
 
@@ -98,10 +98,10 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gray);
-      transition: color 0.15s;
       white-space: nowrap;
       border-bottom: 2px solid transparent;
       margin-bottom: -1px;
+      transition: color 0.15s;
     }
     .tab-btn:hover { color: var(--black); }
     .tab-btn.active {
@@ -109,7 +109,6 @@
       border-bottom-color: var(--black);
     }
 
-    /* Full/short label swap */
     .lbl-full  { display: inline; }
     .lbl-short { display: none; }
     @media (max-width: 480px) {
@@ -125,7 +124,7 @@
       letter-spacing: 0.1em;
       background: var(--sand);
       color: var(--gray);
-      padding: 2px 5px;
+      padding: 2px 6px;
       border-radius: 20px;
       transition: background 0.15s, color 0.15s;
     }
@@ -134,14 +133,14 @@
       color: var(--white);
     }
 
-    /* ── FILTER PILLS (filter row) ───────────────────────── */
+    /* ── FILTER PILLS ────────────────────────────────────── */
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 6px;
       flex: 1;
-      padding: 6px 8px;
+      padding: 7px 8px;
     }
 
     .filter-btn {
@@ -149,7 +148,7 @@
       align-items: center;
       gap: 5px;
       padding: 3px 10px;
-      background: none;
+      background: var(--white);
       border: 1px solid var(--sand-dark);
       border-radius: 20px;
       cursor: pointer;
@@ -159,8 +158,8 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--gray);
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
       white-space: nowrap;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
     }
     .filter-btn:hover {
       border-color: var(--gray);
@@ -171,15 +170,15 @@
       border-color: var(--black);
       color: var(--white);
     }
-    .filter-btn .f-count {
+    .f-count {
       font-size: 8px;
-      opacity: 0.6;
+      opacity: 0.55;
     }
     .filter-btn.active .f-count { opacity: 0.7; }
 
-    /* ── CONTENT ─────────────────────────────────────────── */
+    /* ── CONTENT AREA ────────────────────────────────────── */
     .content {
-      padding: 32px 24px 64px;
+      padding: 28px 24px 64px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -188,16 +187,15 @@
     .app-section.visible { display: block; }
 
     /* ── DATE GROUP ──────────────────────────────────────── */
-    .date-group { margin-bottom: 48px; }
-
+    .date-group { margin-bottom: 40px; }
     .date-group.hidden { display: none; }
 
     .date-header {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--sand-dark);
     }
     .date-label {
@@ -212,11 +210,11 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gray);
-      background: var(--sand);
+      background: var(--sand-dark);
       padding: 3px 8px;
       border-radius: 20px;
     }
-    .date-line { flex: 1; height: 1px; background: var(--sand); }
+    .date-line { flex: 1; height: 1px; background: var(--sand-dark); }
 
     /* ── PHOTO GRID ──────────────────────────────────────── */
     .photo-grid {
@@ -227,7 +225,7 @@
     @media (min-width: 900px) {
       .photo-grid {
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-        gap: 16px;
+        gap: 14px;
       }
     }
 
@@ -237,29 +235,26 @@
       overflow: hidden;
       background: var(--sand-light);
       border: 1px solid var(--sand-dark);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
       transition: transform 0.18s ease, box-shadow 0.18s ease;
       aspect-ratio: 9/19.5;
       position: relative;
     }
     .photo-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.13);
     }
     .photo-card.filtered-out { display: none; }
 
     .photo-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 0;
-      transition: opacity 0.2s;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      opacity: 0; transition: opacity 0.2s;
     }
     .photo-card img.loaded { opacity: 1; }
 
     .img-skeleton {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(90deg, var(--sand-light) 25%, var(--sand) 50%, var(--sand-light) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.4s infinite;
@@ -269,13 +264,12 @@
       100% { background-position: -200% 0; }
     }
 
-    /* Empty state when filter has no results */
     .no-results {
       display: none;
-      padding: 60px 0;
+      padding: 40px 0;
       text-align: center;
       color: var(--gray-light);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -284,78 +278,54 @@
 
     /* ── LIGHTBOX ────────────────────────────────────────── */
     .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
+      display: none; position: fixed; inset: 0; z-index: 200;
       background: rgba(0,0,0,0.88);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      align-items: center; justify-content: center; padding: 24px;
     }
     .lightbox.open { display: flex; }
 
     .lightbox-close {
-      position: fixed;
-      top: 20px; right: 24px;
-      background: none; border: none;
-      cursor: pointer;
-      color: rgba(255,255,255,0.7);
-      font-size: 28px; font-weight: 100; line-height: 1;
+      position: fixed; top: 20px; right: 24px;
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.7); font-size: 28px; font-weight: 100;
       transition: color 0.15s; z-index: 201;
     }
     .lightbox-close:hover { color: #fff; }
 
     .lightbox-nav {
-      position: fixed;
-      top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.8);
-      width: 44px; height: 44px; border-radius: 50%;
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8); width: 44px; height: 44px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 18px; font-weight: 100;
-      transition: background 0.15s; z-index: 201;
+      cursor: pointer; font-size: 18px; transition: background 0.15s; z-index: 201;
     }
     .lightbox-nav:hover { background: rgba(255,255,255,0.18); }
     .lightbox-prev { left: 16px; }
     .lightbox-next { right: 16px; }
 
-    .lightbox-img-wrap {
-      max-height: calc(100vh - 80px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
     .lightbox img {
       max-height: calc(100vh - 80px);
       max-width: min(420px, calc(100vw - 120px));
-      object-fit: contain;
-      border-radius: 14px;
+      object-fit: contain; border-radius: 14px;
       box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
     .lightbox-counter {
-      position: fixed;
-      bottom: 24px; left: 50%; transform: translateX(-50%);
-      font-weight: 700; font-size: 10px;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-weight: 700; font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
     }
   </style>
 </head>
 <body>
 
   <header class="topbar">
-    <!-- Row 1: title -->
     <div class="topbar-title-row">
       <span>Scout&thinsp;:&thinsp;UI Repository</span>
     </div>
-    <!-- Row 2: app tabs -->
     <div class="filter-row">
       <span class="row-label">App</span>
       <nav class="tab-bar" id="tabBar" role="tablist" aria-label="Select app"></nav>
     </div>
-    <!-- Row 3: content filters -->
     <div class="filter-row">
       <span class="row-label">Filter</span>
       <div class="filter-bar" id="filterBar" role="group" aria-label="Filter by content"></div>
@@ -364,11 +334,10 @@
 
   <main class="content" id="content"></main>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
     <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
-    <div class="lightbox-img-wrap">
+    <div style="max-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:center;">
       <img id="lbImg" src="" alt="Screenshot" />
     </div>
     <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next">&#8594;</button>
@@ -377,35 +346,33 @@
 
   <script>
     // ── DATA ────────────────────────────────────────────────
-    // Source: Google Drive folder 1pA-AZ4CqEiooQ2W7lttaM0wd5B4k1azH
-    // Tags assigned by scanning Drive content snippets.
-    // tags: "map" | "lock-screen" | "onboarding"
+    // Tags: map | lock-screen | onboarding | flight-detail | feed | leaderboard
     const screenshots = [
 
-      // ── ATC — May 16, 2026 ──────────────────────────────
+      // ── ATC — May 16 ────────────────────────────────────
       { app:"ATC", date:"20260516", id:"1qbNm9927vUbFNsQAGnYlT2k5jJUVGxNf", tags:["map"] },
       { app:"ATC", date:"20260516", id:"1cBBDnhN65xbpHNW4kGPzQ4MZmMMneaes", tags:["map"] },
-      { app:"ATC", date:"20260516", id:"1oQckdBUCBfIKHTKamjqoFXvig0yIqmni", tags:[] },
+      { app:"ATC", date:"20260516", id:"1oQckdBUCBfIKHTKamjqoFXvig0yIqmni", tags:["feed"] },
       { app:"ATC", date:"20260516", id:"10N9QlbAbM7VJRbJS113hU0lTeclnc0gt", tags:[] },
-      { app:"ATC", date:"20260516", id:"1x_RjypceXsCyZsMYaw6ZwOpbX0zD1Gj-", tags:[] },
-      { app:"ATC", date:"20260516", id:"1wwXTo_FUh9Xbx5XVBZyFTT1XdD0ZWQQM", tags:[] },
-      { app:"ATC", date:"20260516", id:"1uz86hEBZcXVgm6jmMArabuv14HVN3DX3", tags:[] },
+      { app:"ATC", date:"20260516", id:"1x_RjypceXsCyZsMYaw6ZwOpbX0zD1Gj-", tags:["feed"] },
+      { app:"ATC", date:"20260516", id:"1wwXTo_FUh9Xbx5XVBZyFTT1XdD0ZWQQM", tags:["feed"] },
+      { app:"ATC", date:"20260516", id:"1uz86hEBZcXVgm6jmMArabuv14HVN3DX3", tags:["feed"] },
 
-      // ── flightsky — May 16, 2026 ────────────────────────
+      // ── flightsky — May 16 ──────────────────────────────
       { app:"flightsky", date:"20260516", id:"1XtRQKdrGQIBEG0zndDA-vSco-u0x6VdH", tags:["map"] },
       { app:"flightsky", date:"20260516", id:"1P6Q4c_D2G8_egCfsSW5JXFYKJZUtV18F", tags:["map"] },
       { app:"flightsky", date:"20260516", id:"1-P_kX6n7a4TQc9qGDB81oHP3s5k4jSuX", tags:["map"] },
       { app:"flightsky", date:"20260516", id:"12UIpP4_ksIryHz-0jUmA_ZY5FDL-Dr12",  tags:["map"] },
-      { app:"flightsky", date:"20260516", id:"1FL4ApXrfQySDgcvHqf1JScbTYel3LYAo", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1QJ9rpU71pGN5LDLiwc1dfr6M2EnCStYp", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1tvbxAgJQidKM3jsnKCPo46A8amWgUbMX", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1DgXeub7gMgXFc0C9g8e-PTnm-PCjZ1DV", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1IJQD9UruUVkmM_9BoLiXqF8Zg8qJsCTe", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1Lv_oVI3B_HLlXtiV5dYdsiXXSU_7_u0E", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1a_3xKTreN7Wj0LESrLCAq36Ii8dEwFA-", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1ARVDvfVNjkB2kCQ1A844ESFbI60NfHNW", tags:[] },
-      { app:"flightsky", date:"20260516", id:"1ZJZnWzGUpLfYpLvc81V_LFwnTGlDCSFe", tags:[] },
-      { app:"flightsky", date:"20260516", id:"10nBSNMpDUWdZHQSPNuVv8utTjqdiiWlx", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1tvbxAgJQidKM3jsnKCPo46A8amWgUbMX", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1DgXeub7gMgXFc0C9g8e-PTnm-PCjZ1DV", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1IJQD9UruUVkmM_9BoLiXqF8Zg8qJsCTe", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1Lv_oVI3B_HLlXtiV5dYdsiXXSU_7_u0E", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1QJ9rpU71pGN5LDLiwc1dfr6M2EnCStYp", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1a_3xKTreN7Wj0LESrLCAq36Ii8dEwFA-", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1ARVDvfVNjkB2kCQ1A844ESFbI60NfHNW", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"10nBSNMpDUWdZHQSPNuVv8utTjqdiiWlx", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1ZJZnWzGUpLfYpLvc81V_LFwnTGlDCSFe", tags:["flight-detail"] },
+      { app:"flightsky", date:"20260516", id:"1FL4ApXrfQySDgcvHqf1JScbTYel3LYAo", tags:["flight-detail"] },
       { app:"flightsky", date:"20260516", id:"15EimYiy9nR7dT7NXjKlTsCitmu4XKJPp", tags:[] },
       { app:"flightsky", date:"20260516", id:"1O7r460gqLGOah67w225Ilzgcg6Ktujov", tags:[] },
       { app:"flightsky", date:"20260516", id:"1egjbyoElHNd3oHs9smFgtCU5CwU2eoXK", tags:[] },
@@ -416,21 +383,30 @@
       { app:"flightsky", date:"20260516", id:"1RvnvdmLkGdkXR7SNkwhKEuPcWFu4sa7G", tags:[] },
       { app:"flightsky", date:"20260516", id:"1KpTxlDWHxqd0sYR71tEThHz4HC3dVGil", tags:[] },
 
-      // ── hangar — May 16, 2026 ────────────────────────────
-      { app:"hangar", date:"20260516", id:"1WXNKMnXIpO0T5Rv25lVzEAgOpmP3rPMC", tags:[] },
-      { app:"hangar", date:"20260516", id:"1cBzIwFaFvqVFZMk9-89Viyqq1TLKAos_", tags:[] },
+      // ── hangar — May 16 ─────────────────────────────────
+      // Leaderboards
+      { app:"hangar", date:"20260516", id:"1Aa8n1RqY6B1HjWVCbyAjNiNz4im4aJfb", tags:["leaderboard"] },
+      { app:"hangar", date:"20260516", id:"1Dqo22XKRmBni0sidHDj6INUjzTSM-qiM", tags:["leaderboard"] },
+      { app:"hangar", date:"20260516", id:"1DBS4vDxzFbUwEo7dyp5JXi7lFYY96Wa5", tags:["leaderboard"] },
+      // Map
+      { app:"hangar", date:"20260516", id:"1VaZfJYprCuZqeaPpumMVX968K3lLq1P-", tags:["map"] },
+      // Feed
+      { app:"hangar", date:"20260516", id:"1cBzIwFaFvqVFZMk9-89Viyqq1TLKAos_", tags:["feed"] },
+      // Onboarding (confirmed by content snippet)
       { app:"hangar", date:"20260516", id:"1tk6_1dx89SonX-BRyY3zk3yTbkC0F7JP", tags:["onboarding"] },
       { app:"hangar", date:"20260516", id:"1px0OIMpIx6QTHCdAD4lldoAwDPM692hT", tags:["onboarding"] },
       { app:"hangar", date:"20260516", id:"1lH3GlE3XO74REwg52f3bJ0yqhrMXlDMS", tags:["onboarding"] },
-      { app:"hangar", date:"20260516", id:"1F4H0K0QRd5Fsaqd_qpdrRN5fXDhx5vny", tags:[] },
-      { app:"hangar", date:"20260516", id:"1DZRO18u67USMT-D2Bj2Du1RbmBTCtins", tags:[] },
-      { app:"hangar", date:"20260516", id:"1HHDHsvHUSS1O_4ypsxg6sIbxzE4OsI3P", tags:[] },
-      { app:"hangar", date:"20260516", id:"1Aa8n1RqY6B1HjWVCbyAjNiNz4im4aJfb", tags:[] },
-      { app:"hangar", date:"20260516", id:"1Dqo22XKRmBni0sidHDj6INUjzTSM-qiM", tags:[] },
-      { app:"hangar", date:"20260516", id:"1DBS4vDxzFbUwEo7dyp5JXi7lFYY96Wa5", tags:[] },
+      // Onboarding (inferred from upload sequence — uploaded adjacent to confirmed onboarding screens)
+      { app:"hangar", date:"20260516", id:"1F4H0K0QRd5Fsaqd_qpdrRN5fXDhx5vny", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1DZRO18u67USMT-D2Bj2Du1RbmBTCtins", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1HHDHsvHUSS1O_4ypsxg6sIbxzE4OsI3P", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"12SPq1Z-h5Nedu2XofClWd3zFZySKRkFF", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1IhIHOl59k3ewu33iWpQmABHHMydfGop8", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"13Wxm-2sVrIU5yTcYz-DbKtMfxRzoK5Mk", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1HkdUmSRhtPEXESf-ADtt3ThzAvYKXWSV", tags:["onboarding"] },
+      // Other
       { app:"hangar", date:"20260516", id:"1tVMR47GktU5ogGS1-6Ce52srKwgtIPXQ", tags:[] },
       { app:"hangar", date:"20260516", id:"1gw_9amAX78dwfh_WSBR47Q_pamdvHf_D", tags:[] },
-      { app:"hangar", date:"20260516", id:"1VaZfJYprCuZqeaPpumMVX968K3lLq1P-", tags:["map"] },
       { app:"hangar", date:"20260516", id:"1Ua4D7vnbJJZ01zpotq8de9SZchQe3IfX", tags:[] },
       { app:"hangar", date:"20260516", id:"1U0u4ufRRk6VpcEjrn_DYSRTWaDJpP5df", tags:[] },
       { app:"hangar", date:"20260516", id:"1qh-ASA37RBOBmuFSkkMLdvT0DSi3F_gp", tags:[] },
@@ -439,13 +415,10 @@
       { app:"hangar", date:"20260516", id:"1HrQPTEjJA0xkPIb8DUgUiadbnIPfTlhk", tags:[] },
       { app:"hangar", date:"20260516", id:"1J_abqCb3Fq_5KhXYO8V2VpY8gcsfkJ74", tags:[] },
       { app:"hangar", date:"20260516", id:"1xSMiCDUsGbPzzJOariIorFe9semoKmbA", tags:[] },
-      { app:"hangar", date:"20260516", id:"1IhIHOl59k3ewu33iWpQmABHHMydfGop8", tags:[] },
-      { app:"hangar", date:"20260516", id:"12SPq1Z-h5Nedu2XofClWd3zFZySKRkFF", tags:[] },
-      { app:"hangar", date:"20260516", id:"13Wxm-2sVrIU5yTcYz-DbKtMfxRzoK5Mk", tags:[] },
       { app:"hangar", date:"20260516", id:"10m2ehAfpxQJRi--xoIIpAchUfyWphM7q", tags:[] },
-      { app:"hangar", date:"20260516", id:"1HkdUmSRhtPEXESf-ADtt3ThzAvYKXWSV", tags:[] },
+      { app:"hangar", date:"20260516", id:"1WXNKMnXIpO0T5Rv25lVzEAgOpmP3rPMC", tags:[] },
 
-      // ── planefinder — May 15, 2026 ───────────────────────
+      // ── planefinder — May 15 ────────────────────────────
       { app:"planefinder", date:"20260515", id:"1tEG7U81osyXREs_KFX1yL_bJb_2GJdeF", tags:["lock-screen"] },
       { app:"planefinder", date:"20260515", id:"1sYaVVQX0IIR3MlQfRY4VTfG6MwmIN-yU", tags:["map"] },
       { app:"planefinder", date:"20260515", id:"1Qtu93S_xo0xM0U0cd8vjZt4K58VQEqj2", tags:["map"] },
@@ -453,52 +426,46 @@
       { app:"planefinder", date:"20260515", id:"1zO4trM9EMT9XF7INpTsNGiCoHMhP-7sr",  tags:["map"] },
       { app:"planefinder", date:"20260515", id:"1HlliKs5jedIsDZsjE1AAGWYxVQipHs9m",  tags:["map"] },
       { app:"planefinder", date:"20260515", id:"1o21n8LhT5pEq44_qWlje45E2RZCSQX5k", tags:["onboarding"] },
-      { app:"planefinder", date:"20260515", id:"1Y4isMy2gYUHfVuElmvd_awWEZdCawg7O", tags:[] },
-      { app:"planefinder", date:"20260515", id:"1RtVvMxJEFpEs3I31V0MPMldb1VN-6v9u", tags:[] },
-      { app:"planefinder", date:"20260515", id:"1dylrRGI_UXEHjBhFFVbl6G2T9ZbvJFZH", tags:[] },
+      { app:"planefinder", date:"20260515", id:"1Y4isMy2gYUHfVuElmvd_awWEZdCawg7O", tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1RtVvMxJEFpEs3I31V0MPMldb1VN-6v9u", tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1dylrRGI_UXEHjBhFFVbl6G2T9ZbvJFZH", tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1tYDK-2n2F-duEcysjpM9256D-dZqTktQ",  tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1ZnHrtlS6bcp1LOx5BqewkOZgGcv05ft2",  tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1A5KhwFah0O2Be8XyRh3oo4GYUoj7wn_C", tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"13_DRyPaNovRLE2AXgHxxvuu2_q57cURP",  tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1yHB45T3efpoJyyzqmw7p-H2O6z-0dLUI",  tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1XHrTuniUWfudS6Y0iOuCXZ9oR_RfOJDL",  tags:["flight-detail"] },
+      { app:"planefinder", date:"20260515", id:"1c4zCcAFOFkMzE-fu8dpcPKzF5XR2M7gn",  tags:["flight-detail"] },
       { app:"planefinder", date:"20260515", id:"1amS0_zUr2n4RK_aW84dm6p-rDEr9g0lo", tags:[] },
-      { app:"planefinder", date:"20260515", id:"1A5KhwFah0O2Be8XyRh3oo4GYUoj7wn_C", tags:[] },
-      { app:"planefinder", date:"20260515", id:"13_DRyPaNovRLE2AXgHxxvuu2_q57cURP",  tags:[] },
-      { app:"planefinder", date:"20260515", id:"1tYDK-2n2F-duEcysjpM9256D-dZqTktQ",  tags:[] },
-      { app:"planefinder", date:"20260515", id:"1XHrTuniUWfudS6Y0iOuCXZ9oR_RfOJDL",  tags:[] },
-      { app:"planefinder", date:"20260515", id:"1ZnHrtlS6bcp1LOx5BqewkOZgGcv05ft2",  tags:[] },
       { app:"planefinder", date:"20260515", id:"15_vNYj3NRsAG8uzNg6Q0aFlfHCZWZff6",  tags:[] },
-      { app:"planefinder", date:"20260515", id:"1c4zCcAFOFkMzE-fu8dpcPKzF5XR2M7gn",  tags:[] },
-      { app:"planefinder", date:"20260515", id:"1yHB45T3efpoJyyzqmw7p-H2O6z-0dLUI",  tags:[] },
     ];
 
     // ── HELPERS ─────────────────────────────────────────────
     const thumbUrl = id => `https://drive.google.com/thumbnail?id=${id}&sz=w500`;
     const fullUrl  = id => `https://drive.google.com/uc?export=view&id=${id}`;
 
-    function formatDate(yyyymmdd) {
-      const y = yyyymmdd.slice(0,4), m = yyyymmdd.slice(4,6), d = yyyymmdd.slice(6,8);
-      return new Date(+y, +m-1, +d).toLocaleDateString('en-US', { month:'long', day:'numeric' });
+    function formatDate(s) {
+      const [y,m,d] = [s.slice(0,4), s.slice(4,6), s.slice(6,8)];
+      return new Date(+y,+m-1,+d).toLocaleDateString('en-US',{month:'long',day:'numeric'});
     }
 
-    const SHORT = {
-      planefinder: 'planefndr',
-      flightsky:   'fltsky',
-      hangar:      'hangar',
-      ATC:         'ATC',
-    };
+    const SHORT = { planefinder:'planefndr', flightsky:'fltsky', hangar:'hangar', ATC:'ATC' };
 
-    // Content filter definitions
     const FILTERS = [
-      { id:'all',         label:'All' },
-      { id:'map',         label:'Maps' },
-      { id:'lock-screen', label:'Lock Screen' },
-      { id:'onboarding',  label:'Onboarding' },
+      { id:'all',          label:'All' },
+      { id:'map',          label:'Maps' },
+      { id:'flight-detail',label:'Flight Detail' },
+      { id:'feed',         label:'Feed' },
+      { id:'onboarding',   label:'Onboarding' },
+      { id:'leaderboard',  label:'Leaderboards' },
+      { id:'lock-screen',  label:'Lock Screen' },
     ];
 
     // ── STATE ────────────────────────────────────────────────
-    const apps = [...new Set(screenshots.map(s => s.app))].sort();
+    const apps       = [...new Set(screenshots.map(s => s.app))].sort();
     let activeApp    = apps[0];
     let activeFilter = 'all';
-
-    // Lightbox flat list (all screenshots, order matches DOM)
-    let lbList = [];
-    let lbIdx  = 0;
+    let lbList = [], lbIdx = 0;
 
     // ── BUILD TABS ───────────────────────────────────────────
     const tabBar = document.getElementById('tabBar');
@@ -518,22 +485,20 @@
     const filterBar = document.getElementById('filterBar');
     FILTERS.forEach(f => {
       const btn = document.createElement('button');
-      btn.className = 'filter-btn' + (f.id === activeFilter ? ' active' : '');
+      btn.className = 'filter-btn' + (f.id === 'all' ? ' active' : '');
       btn.dataset.filter = f.id;
-      btn.innerHTML = `${f.label}`;
+      btn.innerHTML = f.label;
       btn.addEventListener('click', () => switchFilter(f.id));
       filterBar.appendChild(btn);
     });
 
     // ── BUILD CONTENT ─────────────────────────────────────────
     const content = document.getElementById('content');
-
     apps.forEach(app => {
       const section = document.createElement('div');
       section.className = 'app-section' + (app === activeApp ? ' visible' : '');
       section.id = `app-${app}`;
 
-      // Group by date
       const dateMap = {};
       screenshots.filter(s => s.app === app).forEach(s => {
         (dateMap[s.date] = dateMap[s.date]||[]).push(s);
@@ -544,7 +509,6 @@
         const group = document.createElement('div');
         group.className = 'date-group';
         group.dataset.date = date;
-
         group.innerHTML = `
           <div class="date-header">
             <span class="date-label">${formatDate(date)}</span>
@@ -556,39 +520,38 @@
         grid.className = 'photo-grid';
 
         items.forEach(s => {
-          const globalIdx = lbList.length;
+          const idx = lbList.length;
           lbList.push(s);
-
           const card = document.createElement('div');
           card.className = 'photo-card';
           card.tabIndex = 0;
-          card.dataset.idx = globalIdx;
+          card.dataset.idx = idx;
           card.dataset.tags = s.tags.join(' ');
 
-          const skeleton = document.createElement('div');
-          skeleton.className = 'img-skeleton';
+          const skel = document.createElement('div');
+          skel.className = 'img-skeleton';
 
           const img = document.createElement('img');
           img.alt = `${app} screenshot`;
           img.loading = 'lazy';
           img.src = thumbUrl(s.id);
-          img.addEventListener('load',  () => { img.classList.add('loaded'); skeleton.remove(); });
-          img.addEventListener('error', () => { skeleton.style.animation='none'; skeleton.style.background='var(--sand)'; });
+          img.addEventListener('load',  () => { img.classList.add('loaded'); skel.remove(); });
+          img.addEventListener('error', () => { skel.style.animation='none'; skel.style.background='var(--sand)'; });
 
-          card.appendChild(skeleton);
+          card.appendChild(skel);
           card.appendChild(img);
-          card.addEventListener('click', () => openLightbox(globalIdx));
-          card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') openLightbox(globalIdx); });
+          card.addEventListener('click', () => openLightbox(idx));
+          card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openLightbox(idx); });
           grid.appendChild(card);
         });
 
-        const noResults = document.createElement('div');
-        noResults.className = 'no-results';
-        noResults.id = `nr-${app}-${date}`;
-        noResults.textContent = 'No screenshots match this filter';
+        const noRes = document.createElement('div');
+        noRes.className = 'no-results';
+        noRes.id = `nr-${app}-${date}`;
+        noRes.textContent = 'No screenshots match this filter';
 
         group.appendChild(grid);
-        group.appendChild(noResults);
+        group.appendChild(noRes);
         section.appendChild(group);
       });
 
@@ -603,18 +566,18 @@
         b.classList.toggle('active', on);
         b.setAttribute('aria-selected', on);
       });
-      document.querySelectorAll('.app-section').forEach(s => {
-        s.classList.toggle('visible', s.id === `app-${app}`);
-      });
+      document.querySelectorAll('.app-section').forEach(s =>
+        s.classList.toggle('visible', s.id === `app-${app}`)
+      );
       applyFilter();
     }
 
     // ── SWITCH FILTER ─────────────────────────────────────────
-    function switchFilter(filterId) {
-      activeFilter = filterId;
-      document.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.filter === filterId);
-      });
+    function switchFilter(id) {
+      activeFilter = id;
+      document.querySelectorAll('.filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.filter === id)
+      );
       applyFilter();
     }
 
@@ -622,40 +585,27 @@
     function applyFilter() {
       const section = document.getElementById(`app-${activeApp}`);
       if (!section) return;
-
       section.querySelectorAll('.date-group').forEach(group => {
-        const date  = group.dataset.date;
-        const cards = group.querySelectorAll('.photo-card');
+        const date = group.dataset.date;
         let visible = 0;
-
-        cards.forEach(card => {
+        group.querySelectorAll('.photo-card').forEach(card => {
           const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
           const show = activeFilter === 'all' || tags.includes(activeFilter);
           card.classList.toggle('filtered-out', !show);
           if (show) visible++;
         });
-
-        // Update date count and show/hide no-results
-        const countEl = document.getElementById(`dc-${activeApp}-${date}`);
-        if (countEl) countEl.textContent = visible;
-
-        const noRes = document.getElementById(`nr-${activeApp}-${date}`);
-        if (noRes) noRes.classList.toggle('visible', visible === 0);
-
+        const dc = document.getElementById(`dc-${activeApp}-${date}`);
+        if (dc) dc.textContent = visible;
+        const nr = document.getElementById(`nr-${activeApp}-${date}`);
+        if (nr) nr.classList.toggle('visible', visible === 0);
         group.classList.toggle('hidden', visible === 0 && activeFilter !== 'all');
       });
-
-      // Update tab badge to show filtered count for active app
-      updateTabCount(activeApp);
-    }
-
-    function updateTabCount(app) {
-      const appScreens = screenshots.filter(s => s.app === app);
-      const count = activeFilter === 'all'
-        ? appScreens.length
-        : appScreens.filter(s => s.tags.includes(activeFilter)).length;
-      const el = document.getElementById(`tc-${app}`);
-      if (el) el.textContent = count;
+      // update tab badge
+      const appAll = screenshots.filter(s => s.app === activeApp);
+      const shown  = activeFilter === 'all' ? appAll.length
+        : appAll.filter(s => s.tags.includes(activeFilter)).length;
+      const tc = document.getElementById(`tc-${activeApp}`);
+      if (tc) tc.textContent = shown;
     }
 
     // ── LIGHTBOX ──────────────────────────────────────────────
@@ -667,8 +617,7 @@
     const lbCtr   = document.getElementById('lbCounter');
 
     function openLightbox(idx) {
-      lbIdx = idx;
-      renderLb();
+      lbIdx = idx; renderLb();
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -677,22 +626,21 @@
       document.body.style.overflow = '';
     }
     function renderLb() {
-      const s = lbList[lbIdx];
-      lbImg.src = fullUrl(s.id);
+      lbImg.src = fullUrl(lbList[lbIdx].id);
       lbCtr.textContent = `${lbIdx+1} / ${lbList.length}`;
       lbPrev.style.opacity = lbIdx === 0 ? '0.25' : '1';
       lbNext.style.opacity = lbIdx === lbList.length-1 ? '0.25' : '1';
     }
 
     lbClose.addEventListener('click', closeLightbox);
-    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-    lbPrev.addEventListener('click', () => { if (lbIdx > 0) { lbIdx--; renderLb(); } });
-    lbNext.addEventListener('click', () => { if (lbIdx < lbList.length-1) { lbIdx++; renderLb(); } });
+    lb.addEventListener('click', e => { if(e.target===lb) closeLightbox(); });
+    lbPrev.addEventListener('click', () => { if(lbIdx>0) { lbIdx--; renderLb(); } });
+    lbNext.addEventListener('click', () => { if(lbIdx<lbList.length-1) { lbIdx++; renderLb(); } });
     document.addEventListener('keydown', e => {
       if (!lb.classList.contains('open')) return;
       if (e.key==='Escape')      closeLightbox();
-      if (e.key==='ArrowLeft'  && lbIdx > 0)               { lbIdx--; renderLb(); }
-      if (e.key==='ArrowRight' && lbIdx < lbList.length-1) { lbIdx++; renderLb(); }
+      if (e.key==='ArrowLeft'  && lbIdx>0)               { lbIdx--; renderLb(); }
+      if (e.key==='ArrowRight' && lbIdx<lbList.length-1) { lbIdx++; renderLb(); }
     });
   </script>
 </body>
