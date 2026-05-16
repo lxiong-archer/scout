@@ -600,12 +600,14 @@
         if (nr) nr.classList.toggle('visible', visible === 0);
         group.classList.toggle('hidden', visible === 0 && activeFilter !== 'all');
       });
-      // update tab badge
-      const appAll = screenshots.filter(s => s.app === activeApp);
-      const shown  = activeFilter === 'all' ? appAll.length
-        : appAll.filter(s => s.tags.includes(activeFilter)).length;
-      const tc = document.getElementById(`tc-${activeApp}`);
-      if (tc) tc.textContent = shown;
+      // update all tab badges
+      apps.forEach(app => {
+        const appAll = screenshots.filter(s => s.app === app);
+        const shown  = activeFilter === 'all' ? appAll.length
+          : appAll.filter(s => s.tags.includes(activeFilter)).length;
+        const tc = document.getElementById(`tc-${app}`);
+        if (tc) tc.textContent = shown;
+      });
     }
 
     // ── LIGHTBOX ──────────────────────────────────────────────
