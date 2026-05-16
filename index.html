@@ -11,39 +11,42 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --white:      #FFFFFF;
-      --sand:       #E5E0D9;
-      --sand-light: #F2EFEB;
-      --sand-dark:  #D8D2C9;
-      --black:      #000000;
-      --gray:       #807A70;
-      --gray-light: #B0AAA0;
+      --white:       #FFFFFF;
+      --sand:        #E5E0D9;
+      --sand-light:  #F2EFEB;
+      --sand-dark:   #D8D2C9;
+      --header-bg:   #EDE9E4;   /* shaded header tray  */
+      --page-bg:     #F7F5F2;   /* neutral page canvas */
+      --black:       #000000;
+      --gray:        #807A70;
+      --gray-light:  #B0AAA0;
     }
 
     html, body {
-      background: var(--sand);
+      background: var(--page-bg);
       color: var(--black);
       font-family: 'Archivo', 'Inter', sans-serif;
       font-weight: 100;
     }
 
-    /* ── TOP BAR ─────────────────────────────────────────── */
+    /* ── TOP BAR — shaded tray ───────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--header-bg);
       border-bottom: 1px solid var(--sand-dark);
-      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
 
-    /* Row 1 — title: crisp white */
+    /* Row 1 — title */
     .topbar-title-row {
       display: flex;
       align-items: center;
       height: 44px;
       padding: 0 24px;
-      background: var(--white);
-      border-bottom: 1px solid var(--sand);
+      background: var(--header-bg);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
     .topbar-title-row span {
       font-weight: 700;
@@ -52,15 +55,15 @@
       text-transform: uppercase;
     }
 
-    /* Rows 2 & 3 — filter rows: warm sand tint */
+    /* Rows 2 & 3 — filter rows */
     .filter-row {
       display: flex;
       align-items: stretch;
-      background: var(--sand-light);
+      background: var(--header-bg);
       min-height: 40px;
     }
     .filter-row + .filter-row {
-      border-top: 1px solid var(--sand);
+      border-top: 1px solid rgba(0,0,0,0.06);
     }
 
     /* Label — no divider line; just small muted caps with extra spacing */
@@ -176,9 +179,15 @@
     }
     .filter-btn.active .f-count { opacity: 0.7; }
 
-    /* ── CONTENT AREA ────────────────────────────────────── */
+    /* ── CONTENT AREA — white elevated container ─────────── */
+    .content-wrap {
+      padding: 20px 20px 48px;
+    }
     .content {
-      padding: 28px 24px 64px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 28px 24px 48px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -210,11 +219,11 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gray);
-      background: var(--sand-dark);
+      background: var(--sand-light);
       padding: 3px 8px;
       border-radius: 20px;
     }
-    .date-line { flex: 1; height: 1px; background: var(--sand-dark); }
+    .date-line { flex: 1; height: 1px; background: var(--sand-light); }
 
     /* ── PHOTO GRID ──────────────────────────────────────── */
     .photo-grid {
@@ -233,9 +242,9 @@
       cursor: pointer;
       border-radius: 10px;
       overflow: hidden;
-      background: var(--sand-light);
-      border: 1px solid var(--sand-dark);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      background: var(--page-bg);
+      border: 1px solid var(--sand-light);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       transition: transform 0.18s ease, box-shadow 0.18s ease;
       aspect-ratio: 9/19.5;
       position: relative;
@@ -332,7 +341,9 @@
     </div>
   </header>
 
-  <main class="content" id="content"></main>
+  <div class="content-wrap">
+    <main class="content" id="content"></main>
+  </div>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
