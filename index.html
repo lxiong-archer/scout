@@ -11,25 +11,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --white:  #FFFFFF;
-      --sand:   #E5E0D9;
-      --sand-light: #F2EFEB;
-      --sand-dark:  #D8D2C9;
-      --black:  #000000;
-      --gray:   #807A70;
-      --gray-light: #B0AAA0;
-      --accent: rgb(117, 225, 243); /* Light Blue — aviation/tech */
+      --white:       #FFFFFF;
+      --sand:        #E5E0D9;
+      --sand-light:  #F2EFEB;
+      --sand-dark:   #D8D2C9;
+      --black:       #000000;
+      --gray:        #807A70;
+      --gray-light:  #B0AAA0;
     }
 
     html, body {
-      height: 100%;
       background: var(--white);
       color: var(--black);
       font-family: 'Archivo', 'Inter', sans-serif;
       font-weight: 100;
     }
 
-    /* ── TOP BAR ────────────────────────────────────────── */
+    /* ── TOP BAR ─────────────────────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
@@ -38,7 +36,7 @@
       border-bottom: 1px solid var(--sand-dark);
     }
 
-    /* Row 1: title */
+    /* Row 1 — title */
     .topbar-title-row {
       display: flex;
       align-items: center;
@@ -46,29 +44,47 @@
       padding: 0 24px;
       border-bottom: 1px solid var(--sand);
     }
-
     .topbar-title-row span {
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--black);
     }
 
-    /* Row 2: app filter tabs */
-    .topbar-tabs-row {
-      padding: 0 16px;
+    /* Rows 2 & 3 — labeled filter rows */
+    .filter-row {
+      display: flex;
+      align-items: stretch;
+      padding: 0 0 0 24px;
+      border-bottom: 1px solid var(--sand);
+      min-height: 40px;
+    }
+    .filter-row:last-child { border-bottom: none; }
+
+    .row-label {
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      display: flex;
+      align-items: center;
+      padding-right: 16px;
+      border-right: 1px solid var(--sand);
+      margin-right: 4px;
+      flex-shrink: 0;
+      min-width: 52px;
     }
 
-    /* ── APP FILTER TABS ─────────────────────────────────── */
+    /* ── TAB BUTTONS (app row) ───────────────────────────── */
     .tab-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 0;
+      flex: 1;
     }
 
     .tab-btn {
-      position: relative;
       display: flex;
       align-items: center;
       padding: 0 16px;
@@ -87,23 +103,19 @@
       border-bottom: 2px solid transparent;
       margin-bottom: -1px;
     }
-
     .tab-btn:hover { color: var(--black); }
-
     .tab-btn.active {
       color: var(--black);
       border-bottom-color: var(--black);
     }
 
-    /* Full name shown by default, short name hidden */
-    .tab-label-full  { display: inline; }
-    .tab-label-short { display: none; }
-
-    /* On small screens, swap to abbreviated names */
+    /* Full/short label swap */
+    .lbl-full  { display: inline; }
+    .lbl-short { display: none; }
     @media (max-width: 480px) {
-      .tab-label-full  { display: none; }
-      .tab-label-short { display: inline; }
-      .tab-btn { padding: 0 12px; font-size: 10px; }
+      .lbl-full  { display: none; }
+      .lbl-short { display: inline; }
+      .tab-btn   { padding: 0 10px; font-size: 10px; }
     }
 
     .tab-count {
@@ -115,32 +127,70 @@
       color: var(--gray);
       padding: 2px 5px;
       border-radius: 20px;
+      transition: background 0.15s, color 0.15s;
     }
-
     .tab-btn.active .tab-count {
       background: var(--black);
       color: var(--white);
     }
 
-    /* ── CONTENT AREA ────────────────────────────────────── */
+    /* ── FILTER PILLS (filter row) ───────────────────────── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      padding: 6px 8px;
+    }
+
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: none;
+      border: 1px solid var(--sand-dark);
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover {
+      border-color: var(--gray);
+      color: var(--black);
+    }
+    .filter-btn.active {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+    .filter-btn .f-count {
+      font-size: 8px;
+      opacity: 0.6;
+    }
+    .filter-btn.active .f-count { opacity: 0.7; }
+
+    /* ── CONTENT ─────────────────────────────────────────── */
     .content {
       padding: 32px 24px 64px;
       max-width: 1400px;
       margin: 0 auto;
     }
 
-    /* ── APP SECTION ─────────────────────────────────────── */
-    .app-section {
-      display: none;
-    }
-    .app-section.visible {
-      display: block;
-    }
+    .app-section { display: none; }
+    .app-section.visible { display: block; }
 
     /* ── DATE GROUP ──────────────────────────────────────── */
-    .date-group {
-      margin-bottom: 48px;
-    }
+    .date-group { margin-bottom: 48px; }
+
+    .date-group.hidden { display: none; }
 
     .date-header {
       display: flex;
@@ -150,15 +200,12 @@
       padding-bottom: 12px;
       border-bottom: 1px solid var(--sand-dark);
     }
-
     .date-label {
       font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--black);
     }
-
     .date-count {
       font-weight: 700;
       font-size: 9px;
@@ -169,23 +216,17 @@
       padding: 3px 8px;
       border-radius: 20px;
     }
-
-    .date-line {
-      flex: 1;
-      height: 1px;
-      background: var(--sand);
-    }
+    .date-line { flex: 1; height: 1px; background: var(--sand); }
 
     /* ── PHOTO GRID ──────────────────────────────────────── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
       gap: 12px;
     }
-
     @media (min-width: 900px) {
       .photo-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
         gap: 16px;
       }
     }
@@ -200,36 +241,46 @@
       aspect-ratio: 9/19.5;
       position: relative;
     }
-
     .photo-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
+    .photo-card.filtered-out { display: none; }
 
     .photo-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      opacity: 0;
       transition: opacity 0.2s;
     }
+    .photo-card img.loaded { opacity: 1; }
 
-    .photo-card img.loading {
-      opacity: 0;
-    }
-
-    .photo-card .img-skeleton {
+    .img-skeleton {
       position: absolute;
       inset: 0;
       background: linear-gradient(90deg, var(--sand-light) 25%, var(--sand) 50%, var(--sand-light) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.4s infinite;
     }
-
     @keyframes shimmer {
-      0% { background-position: 200% 0; }
+      0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
+    /* Empty state when filter has no results */
+    .no-results {
+      display: none;
+      padding: 60px 0;
+      text-align: center;
+      color: var(--gray-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .no-results.visible { display: block; }
 
     /* ── LIGHTBOX ────────────────────────────────────────── */
     .lightbox {
@@ -242,45 +293,29 @@
       justify-content: center;
       padding: 24px;
     }
-
-    .lightbox.open {
-      display: flex;
-    }
+    .lightbox.open { display: flex; }
 
     .lightbox-close {
       position: fixed;
-      top: 20px;
-      right: 24px;
-      background: none;
-      border: none;
+      top: 20px; right: 24px;
+      background: none; border: none;
       cursor: pointer;
       color: rgba(255,255,255,0.7);
-      font-size: 28px;
-      font-weight: 100;
-      line-height: 1;
-      transition: color 0.15s;
-      z-index: 201;
+      font-size: 28px; font-weight: 100; line-height: 1;
+      transition: color 0.15s; z-index: 201;
     }
     .lightbox-close:hover { color: #fff; }
 
     .lightbox-nav {
       position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 50%; transform: translateY(-50%);
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
       color: rgba(255,255,255,0.8);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 100;
-      transition: background 0.15s;
-      z-index: 201;
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; font-weight: 100;
+      transition: background 0.15s; z-index: 201;
     }
     .lightbox-nav:hover { background: rgba(255,255,255,0.18); }
     .lightbox-prev { left: 16px; }
@@ -292,7 +327,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .lightbox img {
       max-height: calc(100vh - 80px);
       max-width: min(420px, calc(100vw - 120px));
@@ -300,47 +334,38 @@
       border-radius: 14px;
       box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
-
     .lightbox-counter {
       position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-weight: 700; font-size: 10px;
+      letter-spacing: 0.15em; text-transform: uppercase;
       color: rgba(255,255,255,0.5);
-    }
-
-    /* ── EMPTY STATE ─────────────────────────────────────── */
-    .empty {
-      padding: 80px 0;
-      text-align: center;
-      color: var(--gray-light);
-      font-size: 13px;
-      font-weight: 100;
-      letter-spacing: 0.05em;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP BAR -->
   <header class="topbar">
+    <!-- Row 1: title -->
     <div class="topbar-title-row">
       <span>Scout&thinsp;:&thinsp;UI Repository</span>
     </div>
-    <div class="topbar-tabs-row">
-      <nav class="tab-bar" id="tabBar" role="tablist" aria-label="App filter"></nav>
+    <!-- Row 2: app tabs -->
+    <div class="filter-row">
+      <span class="row-label">App</span>
+      <nav class="tab-bar" id="tabBar" role="tablist" aria-label="Select app"></nav>
+    </div>
+    <!-- Row 3: content filters -->
+    <div class="filter-row">
+      <span class="row-label">Filter</span>
+      <div class="filter-bar" id="filterBar" role="group" aria-label="Filter by content"></div>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main class="content" id="content"></main>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
     <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
     <div class="lightbox-img-wrap">
@@ -352,201 +377,294 @@
 
   <script>
     // ── DATA ────────────────────────────────────────────────
-    // Parsed from Google Drive folder: 1pA-AZ4CqEiooQ2W7lttaM0wd5B4k1azH
-    // Filename pattern: {appname}-{type}-{YYYYMMDD}.png
+    // Source: Google Drive folder 1pA-AZ4CqEiooQ2W7lttaM0wd5B4k1azH
+    // Tags assigned by scanning Drive content snippets.
+    // tags: "map" | "lock-screen" | "onboarding"
     const screenshots = [
-      // ATC — May 16, 2026
-      { app: "ATC",         date: "20260516", id: "1qbNm9927vUbFNsQAGnYlT2k5jJUVGxNf" },
-      { app: "ATC",         date: "20260516", id: "1oQckdBUCBfIKHTKamjqoFXvig0yIqmni" },
-      { app: "ATC",         date: "20260516", id: "1cBBDnhN65xbpHNW4kGPzQ4MZmMMneaes" },
-      { app: "ATC",         date: "20260516", id: "10N9QlbAbM7VJRbJS113hU0lTeclnc0gt" },
-      { app: "ATC",         date: "20260516", id: "1x_RjypceXsCyZsMYaw6ZwOpbX0zD1Gj-" },
-      { app: "ATC",         date: "20260516", id: "1wwXTo_FUh9Xbx5XVBZyFTT1XdD0ZWQQM" },
-      { app: "ATC",         date: "20260516", id: "1uz86hEBZcXVgm6jmMArabuv14HVN3DX3" },
-      // hangar — May 16, 2026
-      { app: "hangar",      date: "20260516", id: "1WXNKMnXIpO0T5Rv25lVzEAgOpmP3rPMC" },
-      { app: "hangar",      date: "20260516", id: "1tk6_1dx89SonX-BRyY3zk3yTbkC0F7JP" },
-      { app: "hangar",      date: "20260516", id: "1cBzIwFaFvqVFZMk9-89Viyqq1TLKAos_" },
-      { app: "hangar",      date: "20260516", id: "1px0OIMpIx6QTHCdAD4lldoAwDPM692hT" },
-      { app: "hangar",      date: "20260516", id: "1F4H0K0QRd5Fsaqd_qpdrRN5fXDhx5vny" },
-      { app: "hangar",      date: "20260516", id: "1DZRO18u67USMT-D2Bj2Du1RbmBTCtins" },
-      { app: "hangar",      date: "20260516", id: "1HHDHsvHUSS1O_4ypsxg6sIbxzE4OsI3P" },
-      { app: "hangar",      date: "20260516", id: "1Aa8n1RqY6B1HjWVCbyAjNiNz4im4aJfb" },
-      { app: "hangar",      date: "20260516", id: "1Dqo22XKRmBni0sidHDj6INUjzTSM-qiM" },
-      { app: "hangar",      date: "20260516", id: "1DBS4vDxzFbUwEo7dyp5JXi7lFYY96Wa5" },
-      { app: "hangar",      date: "20260516", id: "1tVMR47GktU5ogGS1-6Ce52srKwgtIPXQ" },
-      { app: "hangar",      date: "20260516", id: "1gw_9amAX78dwfh_WSBR47Q_pamdvHf_D" },
-      { app: "hangar",      date: "20260516", id: "1VaZfJYprCuZqeaPpumMVX968K3lLq1P-" },
-      { app: "hangar",      date: "20260516", id: "1Ua4D7vnbJJZ01zpotq8de9SZchQe3IfX" },
-      { app: "hangar",      date: "20260516", id: "1U0u4ufRRk6VpcEjrn_DYSRTWaDJpP5df" },
-      { app: "hangar",      date: "20260516", id: "1qh-ASA37RBOBmuFSkkMLdvT0DSi3F_gp" },
-      { app: "hangar",      date: "20260516", id: "1sPGiELnxxTsvDkKQaz-S_mnhTsn72Knr" },
-      { app: "hangar",      date: "20260516", id: "1cWulyS80YblwZxYQsyGtxVgZK7ur-Aw3" },
-      { app: "hangar",      date: "20260516", id: "1HrQPTEjJA0xkPIb8DUgUiadbnIPfTlhk" },
-      { app: "hangar",      date: "20260516", id: "1J_abqCb3Fq_5KhXYO8V2VpY8gcsfkJ74" },
-      { app: "hangar",      date: "20260516", id: "1xSMiCDUsGbPzzJOariIorFe9semoKmbA" },
-      { app: "hangar",      date: "20260516", id: "1lH3GlE3XO74REwg52f3bJ0yqhrMXlDMS" },
-      { app: "hangar",      date: "20260516", id: "1IhIHOl59k3ewu33iWpQmABHHMydfGop8" },
-      { app: "hangar",      date: "20260516", id: "12SPq1Z-h5Nedu2XofClWd3zFZySKRkFF" },
-      { app: "hangar",      date: "20260516", id: "13Wxm-2sVrIU5yTcYz-DbKtMfxRzoK5Mk" },
-      { app: "hangar",      date: "20260516", id: "10m2ehAfpxQJRi--xoIIpAchUfyWphM7q" },
-      { app: "hangar",      date: "20260516", id: "1HkdUmSRhtPEXESf-ADtt3ThzAvYKXWSV" },
-      // planefinder — May 15, 2026
-      { app: "planefinder", date: "20260515", id: "1Y4isMy2gYUHfVuElmvd_awWEZdCawg7O" },
-      { app: "planefinder", date: "20260515", id: "1RtVvMxJEFpEs3I31V0MPMldb1VN-6v9u" },
-      { app: "planefinder", date: "20260515", id: "1dylrRGI_UXEHjBhFFVbl6G2T9ZbvJFZH" },
-      { app: "planefinder", date: "20260515", id: "1o21n8LhT5pEq44_qWlje45E2RZCSQX5k" },
-      { app: "planefinder", date: "20260515", id: "1tEG7U81osyXREs_KFX1yL_bJb_2GJdeF" },
-      { app: "planefinder", date: "20260515", id: "1sYaVVQX0IIR3MlQfRY4VTfG6MwmIN-yU" },
-      { app: "planefinder", date: "20260515", id: "1amS0_zUr2n4RK_aW84dm6p-rDEr9g0lo" },
-      { app: "planefinder", date: "20260515", id: "1A5KhwFah0O2Be8XyRh3oo4GYUoj7wn_C" },
-      { app: "planefinder", date: "20260515", id: "13_DRyPaNovRLE2AXgHxxvuu2_q57cURP"  },
-      { app: "planefinder", date: "20260515", id: "11L21EMSkXoihyjCBliH0ITAANkeEo2SI"  },
-      { app: "planefinder", date: "20260515", id: "1zO4trM9EMT9XF7INpTsNGiCoHMhP-7sr"  },
-      { app: "planefinder", date: "20260515", id: "1Qtu93S_xo0xM0U0cd8vjZt4K58VQEqj2"  },
-      { app: "planefinder", date: "20260515", id: "1tYDK-2n2F-duEcysjpM9256D-dZqTktQ"  },
-      { app: "planefinder", date: "20260515", id: "1XHrTuniUWfudS6Y0iOuCXZ9oR_RfOJDL"  },
-      { app: "planefinder", date: "20260515", id: "1ZnHrtlS6bcp1LOx5BqewkOZgGcv05ft2"  },
-      { app: "planefinder", date: "20260515", id: "1HlliKs5jedIsDZsjE1AAGWYxVQipHs9m"  },
-      { app: "planefinder", date: "20260515", id: "15_vNYj3NRsAG8uzNg6Q0aFlfHCZWZff6"  },
-      { app: "planefinder", date: "20260515", id: "1c4zCcAFOFkMzE-fu8dpcPKzF5XR2M7gn"  },
-      { app: "planefinder", date: "20260515", id: "1yHB45T3efpoJyyzqmw7p-H2O6z-0dLUI"  },
+
+      // ── ATC — May 16, 2026 ──────────────────────────────
+      { app:"ATC", date:"20260516", id:"1qbNm9927vUbFNsQAGnYlT2k5jJUVGxNf", tags:["map"] },
+      { app:"ATC", date:"20260516", id:"1cBBDnhN65xbpHNW4kGPzQ4MZmMMneaes", tags:["map"] },
+      { app:"ATC", date:"20260516", id:"1oQckdBUCBfIKHTKamjqoFXvig0yIqmni", tags:[] },
+      { app:"ATC", date:"20260516", id:"10N9QlbAbM7VJRbJS113hU0lTeclnc0gt", tags:[] },
+      { app:"ATC", date:"20260516", id:"1x_RjypceXsCyZsMYaw6ZwOpbX0zD1Gj-", tags:[] },
+      { app:"ATC", date:"20260516", id:"1wwXTo_FUh9Xbx5XVBZyFTT1XdD0ZWQQM", tags:[] },
+      { app:"ATC", date:"20260516", id:"1uz86hEBZcXVgm6jmMArabuv14HVN3DX3", tags:[] },
+
+      // ── flightsky — May 16, 2026 ────────────────────────
+      { app:"flightsky", date:"20260516", id:"1XtRQKdrGQIBEG0zndDA-vSco-u0x6VdH", tags:["map"] },
+      { app:"flightsky", date:"20260516", id:"1P6Q4c_D2G8_egCfsSW5JXFYKJZUtV18F", tags:["map"] },
+      { app:"flightsky", date:"20260516", id:"1-P_kX6n7a4TQc9qGDB81oHP3s5k4jSuX", tags:["map"] },
+      { app:"flightsky", date:"20260516", id:"12UIpP4_ksIryHz-0jUmA_ZY5FDL-Dr12",  tags:["map"] },
+      { app:"flightsky", date:"20260516", id:"1FL4ApXrfQySDgcvHqf1JScbTYel3LYAo", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1QJ9rpU71pGN5LDLiwc1dfr6M2EnCStYp", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1tvbxAgJQidKM3jsnKCPo46A8amWgUbMX", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1DgXeub7gMgXFc0C9g8e-PTnm-PCjZ1DV", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1IJQD9UruUVkmM_9BoLiXqF8Zg8qJsCTe", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1Lv_oVI3B_HLlXtiV5dYdsiXXSU_7_u0E", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1a_3xKTreN7Wj0LESrLCAq36Ii8dEwFA-", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1ARVDvfVNjkB2kCQ1A844ESFbI60NfHNW", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1ZJZnWzGUpLfYpLvc81V_LFwnTGlDCSFe", tags:[] },
+      { app:"flightsky", date:"20260516", id:"10nBSNMpDUWdZHQSPNuVv8utTjqdiiWlx", tags:[] },
+      { app:"flightsky", date:"20260516", id:"15EimYiy9nR7dT7NXjKlTsCitmu4XKJPp", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1O7r460gqLGOah67w225Ilzgcg6Ktujov", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1egjbyoElHNd3oHs9smFgtCU5CwU2eoXK", tags:[] },
+      { app:"flightsky", date:"20260516", id:"19W-UeOz7XeVVeoJg6U0AbYvXx0Xa41Kq", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1XBYkQQxOaLYKDdM5RcUMt_0LIbt1senh", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1G_PzRkfDFmI_nuXHm7zoTXg-tVWp1C5E", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1hbDdQIPfud61MVz6G5ZJt8A0wMwuJ3W-", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1RvnvdmLkGdkXR7SNkwhKEuPcWFu4sa7G", tags:[] },
+      { app:"flightsky", date:"20260516", id:"1KpTxlDWHxqd0sYR71tEThHz4HC3dVGil", tags:[] },
+
+      // ── hangar — May 16, 2026 ────────────────────────────
+      { app:"hangar", date:"20260516", id:"1WXNKMnXIpO0T5Rv25lVzEAgOpmP3rPMC", tags:[] },
+      { app:"hangar", date:"20260516", id:"1cBzIwFaFvqVFZMk9-89Viyqq1TLKAos_", tags:[] },
+      { app:"hangar", date:"20260516", id:"1tk6_1dx89SonX-BRyY3zk3yTbkC0F7JP", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1px0OIMpIx6QTHCdAD4lldoAwDPM692hT", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1lH3GlE3XO74REwg52f3bJ0yqhrMXlDMS", tags:["onboarding"] },
+      { app:"hangar", date:"20260516", id:"1F4H0K0QRd5Fsaqd_qpdrRN5fXDhx5vny", tags:[] },
+      { app:"hangar", date:"20260516", id:"1DZRO18u67USMT-D2Bj2Du1RbmBTCtins", tags:[] },
+      { app:"hangar", date:"20260516", id:"1HHDHsvHUSS1O_4ypsxg6sIbxzE4OsI3P", tags:[] },
+      { app:"hangar", date:"20260516", id:"1Aa8n1RqY6B1HjWVCbyAjNiNz4im4aJfb", tags:[] },
+      { app:"hangar", date:"20260516", id:"1Dqo22XKRmBni0sidHDj6INUjzTSM-qiM", tags:[] },
+      { app:"hangar", date:"20260516", id:"1DBS4vDxzFbUwEo7dyp5JXi7lFYY96Wa5", tags:[] },
+      { app:"hangar", date:"20260516", id:"1tVMR47GktU5ogGS1-6Ce52srKwgtIPXQ", tags:[] },
+      { app:"hangar", date:"20260516", id:"1gw_9amAX78dwfh_WSBR47Q_pamdvHf_D", tags:[] },
+      { app:"hangar", date:"20260516", id:"1VaZfJYprCuZqeaPpumMVX968K3lLq1P-", tags:["map"] },
+      { app:"hangar", date:"20260516", id:"1Ua4D7vnbJJZ01zpotq8de9SZchQe3IfX", tags:[] },
+      { app:"hangar", date:"20260516", id:"1U0u4ufRRk6VpcEjrn_DYSRTWaDJpP5df", tags:[] },
+      { app:"hangar", date:"20260516", id:"1qh-ASA37RBOBmuFSkkMLdvT0DSi3F_gp", tags:[] },
+      { app:"hangar", date:"20260516", id:"1sPGiELnxxTsvDkKQaz-S_mnhTsn72Knr", tags:[] },
+      { app:"hangar", date:"20260516", id:"1cWulyS80YblwZxYQsyGtxVgZK7ur-Aw3", tags:[] },
+      { app:"hangar", date:"20260516", id:"1HrQPTEjJA0xkPIb8DUgUiadbnIPfTlhk", tags:[] },
+      { app:"hangar", date:"20260516", id:"1J_abqCb3Fq_5KhXYO8V2VpY8gcsfkJ74", tags:[] },
+      { app:"hangar", date:"20260516", id:"1xSMiCDUsGbPzzJOariIorFe9semoKmbA", tags:[] },
+      { app:"hangar", date:"20260516", id:"1IhIHOl59k3ewu33iWpQmABHHMydfGop8", tags:[] },
+      { app:"hangar", date:"20260516", id:"12SPq1Z-h5Nedu2XofClWd3zFZySKRkFF", tags:[] },
+      { app:"hangar", date:"20260516", id:"13Wxm-2sVrIU5yTcYz-DbKtMfxRzoK5Mk", tags:[] },
+      { app:"hangar", date:"20260516", id:"10m2ehAfpxQJRi--xoIIpAchUfyWphM7q", tags:[] },
+      { app:"hangar", date:"20260516", id:"1HkdUmSRhtPEXESf-ADtt3ThzAvYKXWSV", tags:[] },
+
+      // ── planefinder — May 15, 2026 ───────────────────────
+      { app:"planefinder", date:"20260515", id:"1tEG7U81osyXREs_KFX1yL_bJb_2GJdeF", tags:["lock-screen"] },
+      { app:"planefinder", date:"20260515", id:"1sYaVVQX0IIR3MlQfRY4VTfG6MwmIN-yU", tags:["map"] },
+      { app:"planefinder", date:"20260515", id:"1Qtu93S_xo0xM0U0cd8vjZt4K58VQEqj2", tags:["map"] },
+      { app:"planefinder", date:"20260515", id:"11L21EMSkXoihyjCBliH0ITAANkeEo2SI",  tags:["map"] },
+      { app:"planefinder", date:"20260515", id:"1zO4trM9EMT9XF7INpTsNGiCoHMhP-7sr",  tags:["map"] },
+      { app:"planefinder", date:"20260515", id:"1HlliKs5jedIsDZsjE1AAGWYxVQipHs9m",  tags:["map"] },
+      { app:"planefinder", date:"20260515", id:"1o21n8LhT5pEq44_qWlje45E2RZCSQX5k", tags:["onboarding"] },
+      { app:"planefinder", date:"20260515", id:"1Y4isMy2gYUHfVuElmvd_awWEZdCawg7O", tags:[] },
+      { app:"planefinder", date:"20260515", id:"1RtVvMxJEFpEs3I31V0MPMldb1VN-6v9u", tags:[] },
+      { app:"planefinder", date:"20260515", id:"1dylrRGI_UXEHjBhFFVbl6G2T9ZbvJFZH", tags:[] },
+      { app:"planefinder", date:"20260515", id:"1amS0_zUr2n4RK_aW84dm6p-rDEr9g0lo", tags:[] },
+      { app:"planefinder", date:"20260515", id:"1A5KhwFah0O2Be8XyRh3oo4GYUoj7wn_C", tags:[] },
+      { app:"planefinder", date:"20260515", id:"13_DRyPaNovRLE2AXgHxxvuu2_q57cURP",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"1tYDK-2n2F-duEcysjpM9256D-dZqTktQ",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"1XHrTuniUWfudS6Y0iOuCXZ9oR_RfOJDL",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"1ZnHrtlS6bcp1LOx5BqewkOZgGcv05ft2",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"15_vNYj3NRsAG8uzNg6Q0aFlfHCZWZff6",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"1c4zCcAFOFkMzE-fu8dpcPKzF5XR2M7gn",  tags:[] },
+      { app:"planefinder", date:"20260515", id:"1yHB45T3efpoJyyzqmw7p-H2O6z-0dLUI",  tags:[] },
     ];
 
     // ── HELPERS ─────────────────────────────────────────────
-    function thumbUrl(id)  { return `https://drive.google.com/thumbnail?id=${id}&sz=w500`; }
-    function fullUrl(id)   { return `https://drive.google.com/uc?export=view&id=${id}`; }
-    function viewUrl(id)   { return `https://drive.google.com/file/d/${id}/view`; }
+    const thumbUrl = id => `https://drive.google.com/thumbnail?id=${id}&sz=w500`;
+    const fullUrl  = id => `https://drive.google.com/uc?export=view&id=${id}`;
 
     function formatDate(yyyymmdd) {
       const y = yyyymmdd.slice(0,4), m = yyyymmdd.slice(4,6), d = yyyymmdd.slice(6,8);
-      const dt = new Date(+y, +m-1, +d);
-      return dt.toLocaleDateString('en-US', { month:'long', day:'numeric' });
+      return new Date(+y, +m-1, +d).toLocaleDateString('en-US', { month:'long', day:'numeric' });
     }
 
-    // Short label for small screens (≤ 10 chars ideally)
-    const appShortNames = {
-      'planefinder': 'planefndr',
-      'hangar':      'hangar',
-      'ATC':         'ATC',
+    const SHORT = {
+      planefinder: 'planefndr',
+      flightsky:   'fltsky',
+      hangar:      'hangar',
+      ATC:         'ATC',
     };
-    function shortName(app) {
-      return appShortNames[app] || app.slice(0, 8);
-    }
 
-    // ── BUILD UI ─────────────────────────────────────────────
-    const apps   = [...new Set(screenshots.map(s => s.app))].sort();
-    const tabBar = document.getElementById('tabBar');
-    const content = document.getElementById('content');
+    // Content filter definitions
+    const FILTERS = [
+      { id:'all',         label:'All' },
+      { id:'map',         label:'Maps' },
+      { id:'lock-screen', label:'Lock Screen' },
+      { id:'onboarding',  label:'Onboarding' },
+    ];
 
-    // For lightbox
-    let lbList = [];  // flat ordered list of {id, app, date}
+    // ── STATE ────────────────────────────────────────────────
+    const apps = [...new Set(screenshots.map(s => s.app))].sort();
+    let activeApp    = apps[0];
+    let activeFilter = 'all';
+
+    // Lightbox flat list (all screenshots, order matches DOM)
+    let lbList = [];
     let lbIdx  = 0;
 
+    // ── BUILD TABS ───────────────────────────────────────────
+    const tabBar = document.getElementById('tabBar');
     apps.forEach(app => {
-      const appScreens = screenshots.filter(s => s.app === app);
-
-      // Tab button
+      const count = screenshots.filter(s => s.app === app).length;
       const btn = document.createElement('button');
-      btn.className = 'tab-btn' + (app === apps[0] ? ' active' : '');
+      btn.className = 'tab-btn' + (app === activeApp ? ' active' : '');
       btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', app === apps[0] ? 'true' : 'false');
-      btn.setAttribute('data-app', app);
-      btn.innerHTML = `<span class="tab-label-full">${app}</span><span class="tab-label-short">${shortName(app)}</span><span class="tab-count">${appScreens.length}</span>`;
-      btn.addEventListener('click', () => switchTab(app));
+      btn.setAttribute('aria-selected', app === activeApp);
+      btn.dataset.app = app;
+      btn.innerHTML = `<span class="lbl-full">${app}</span><span class="lbl-short">${SHORT[app]||app.slice(0,7)}</span><span class="tab-count" id="tc-${app}">${count}</span>`;
+      btn.addEventListener('click', () => switchApp(app));
       tabBar.appendChild(btn);
+    });
 
-      // App section
+    // ── BUILD FILTER PILLS ────────────────────────────────────
+    const filterBar = document.getElementById('filterBar');
+    FILTERS.forEach(f => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (f.id === activeFilter ? ' active' : '');
+      btn.dataset.filter = f.id;
+      btn.innerHTML = `${f.label}`;
+      btn.addEventListener('click', () => switchFilter(f.id));
+      filterBar.appendChild(btn);
+    });
+
+    // ── BUILD CONTENT ─────────────────────────────────────────
+    const content = document.getElementById('content');
+
+    apps.forEach(app => {
       const section = document.createElement('div');
-      section.className = 'app-section' + (app === apps[0] ? ' visible' : '');
+      section.className = 'app-section' + (app === activeApp ? ' visible' : '');
       section.id = `app-${app}`;
 
       // Group by date
       const dateMap = {};
-      appScreens.forEach(s => {
-        if (!dateMap[s.date]) dateMap[s.date] = [];
-        dateMap[s.date].push(s);
+      screenshots.filter(s => s.app === app).forEach(s => {
+        (dateMap[s.date] = dateMap[s.date]||[]).push(s);
       });
 
-      const sortedDates = Object.keys(dateMap).sort().reverse();
-
-      sortedDates.forEach(date => {
+      Object.keys(dateMap).sort().reverse().forEach(date => {
         const items = dateMap[date];
         const group = document.createElement('div');
         group.className = 'date-group';
+        group.dataset.date = date;
+
         group.innerHTML = `
           <div class="date-header">
             <span class="date-label">${formatDate(date)}</span>
-            <span class="date-count">${items.length} screenshot${items.length !== 1 ? 's' : ''}</span>
+            <span class="date-count" id="dc-${app}-${date}">${items.length}</span>
             <div class="date-line"></div>
-          </div>
-        `;
+          </div>`;
 
         const grid = document.createElement('div');
         grid.className = 'photo-grid';
 
-        items.forEach((s, i) => {
-          // Assign global index for lightbox
+        items.forEach(s => {
           const globalIdx = lbList.length;
           lbList.push(s);
 
           const card = document.createElement('div');
           card.className = 'photo-card';
-          card.setAttribute('role', 'button');
-          card.setAttribute('tabindex', '0');
-          card.setAttribute('aria-label', `Screenshot ${i+1} from ${app} on ${formatDate(date)}`);
-          card.setAttribute('data-idx', globalIdx);
+          card.tabIndex = 0;
+          card.dataset.idx = globalIdx;
+          card.dataset.tags = s.tags.join(' ');
 
           const skeleton = document.createElement('div');
           skeleton.className = 'img-skeleton';
 
           const img = document.createElement('img');
-          img.className = 'loading';
-          img.alt = `${app} screenshot ${i+1}`;
+          img.alt = `${app} screenshot`;
           img.loading = 'lazy';
           img.src = thumbUrl(s.id);
-          img.addEventListener('load', () => {
-            img.classList.remove('loading');
-            skeleton.remove();
-          });
-          img.addEventListener('error', () => {
-            skeleton.style.animation = 'none';
-            skeleton.style.background = 'var(--sand)';
-          });
+          img.addEventListener('load',  () => { img.classList.add('loaded'); skeleton.remove(); });
+          img.addEventListener('error', () => { skeleton.style.animation='none'; skeleton.style.background='var(--sand)'; });
 
           card.appendChild(skeleton);
           card.appendChild(img);
           card.addEventListener('click', () => openLightbox(globalIdx));
-          card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(globalIdx); });
+          card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') openLightbox(globalIdx); });
           grid.appendChild(card);
         });
 
+        const noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.id = `nr-${app}-${date}`;
+        noResults.textContent = 'No screenshots match this filter';
+
         group.appendChild(grid);
+        group.appendChild(noResults);
         section.appendChild(group);
       });
 
       content.appendChild(section);
     });
 
-    // ── TAB SWITCHING ────────────────────────────────────────
-    function switchTab(app) {
+    // ── SWITCH APP ────────────────────────────────────────────
+    function switchApp(app) {
+      activeApp = app;
       document.querySelectorAll('.tab-btn').forEach(b => {
-        const active = b.dataset.app === app;
-        b.classList.toggle('active', active);
-        b.setAttribute('aria-selected', active);
+        const on = b.dataset.app === app;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on);
       });
       document.querySelectorAll('.app-section').forEach(s => {
         s.classList.toggle('visible', s.id === `app-${app}`);
       });
+      applyFilter();
     }
 
-    // ── LIGHTBOX ─────────────────────────────────────────────
-    const lb       = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lbImg');
-    const lbClose  = document.getElementById('lbClose');
-    const lbPrev   = document.getElementById('lbPrev');
-    const lbNext   = document.getElementById('lbNext');
-    const lbCounter = document.getElementById('lbCounter');
+    // ── SWITCH FILTER ─────────────────────────────────────────
+    function switchFilter(filterId) {
+      activeFilter = filterId;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.filter === filterId);
+      });
+      applyFilter();
+    }
+
+    // ── APPLY FILTER ──────────────────────────────────────────
+    function applyFilter() {
+      const section = document.getElementById(`app-${activeApp}`);
+      if (!section) return;
+
+      section.querySelectorAll('.date-group').forEach(group => {
+        const date  = group.dataset.date;
+        const cards = group.querySelectorAll('.photo-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+          const tags = card.dataset.tags ? card.dataset.tags.split(' ') : [];
+          const show = activeFilter === 'all' || tags.includes(activeFilter);
+          card.classList.toggle('filtered-out', !show);
+          if (show) visible++;
+        });
+
+        // Update date count and show/hide no-results
+        const countEl = document.getElementById(`dc-${activeApp}-${date}`);
+        if (countEl) countEl.textContent = visible;
+
+        const noRes = document.getElementById(`nr-${activeApp}-${date}`);
+        if (noRes) noRes.classList.toggle('visible', visible === 0);
+
+        group.classList.toggle('hidden', visible === 0 && activeFilter !== 'all');
+      });
+
+      // Update tab badge to show filtered count for active app
+      updateTabCount(activeApp);
+    }
+
+    function updateTabCount(app) {
+      const appScreens = screenshots.filter(s => s.app === app);
+      const count = activeFilter === 'all'
+        ? appScreens.length
+        : appScreens.filter(s => s.tags.includes(activeFilter)).length;
+      const el = document.getElementById(`tc-${app}`);
+      if (el) el.textContent = count;
+    }
+
+    // ── LIGHTBOX ──────────────────────────────────────────────
+    const lb      = document.getElementById('lightbox');
+    const lbImg   = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev  = document.getElementById('lbPrev');
+    const lbNext  = document.getElementById('lbNext');
+    const lbCtr   = document.getElementById('lbCounter');
 
     function openLightbox(idx) {
       lbIdx = idx;
@@ -554,35 +672,27 @@
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
-
     function closeLightbox() {
       lb.classList.remove('open');
       document.body.style.overflow = '';
     }
-
     function renderLb() {
       const s = lbList[lbIdx];
       lbImg.src = fullUrl(s.id);
-      lbCounter.textContent = `${lbIdx + 1} / ${lbList.length}`;
+      lbCtr.textContent = `${lbIdx+1} / ${lbList.length}`;
       lbPrev.style.opacity = lbIdx === 0 ? '0.25' : '1';
-      lbNext.style.opacity = lbIdx === lbList.length - 1 ? '0.25' : '1';
+      lbNext.style.opacity = lbIdx === lbList.length-1 ? '0.25' : '1';
     }
 
     lbClose.addEventListener('click', closeLightbox);
     lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-
-    lbPrev.addEventListener('click', () => {
-      if (lbIdx > 0) { lbIdx--; renderLb(); }
-    });
-    lbNext.addEventListener('click', () => {
-      if (lbIdx < lbList.length - 1) { lbIdx++; renderLb(); }
-    });
-
+    lbPrev.addEventListener('click', () => { if (lbIdx > 0) { lbIdx--; renderLb(); } });
+    lbNext.addEventListener('click', () => { if (lbIdx < lbList.length-1) { lbIdx++; renderLb(); } });
     document.addEventListener('keydown', e => {
       if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeLightbox();
-      if (e.key === 'ArrowLeft'  && lbIdx > 0)               { lbIdx--; renderLb(); }
-      if (e.key === 'ArrowRight' && lbIdx < lbList.length-1) { lbIdx++; renderLb(); }
+      if (e.key==='Escape')      closeLightbox();
+      if (e.key==='ArrowLeft'  && lbIdx > 0)               { lbIdx--; renderLb(); }
+      if (e.key==='ArrowRight' && lbIdx < lbList.length-1) { lbIdx++; renderLb(); }
     });
   </script>
 </body>
