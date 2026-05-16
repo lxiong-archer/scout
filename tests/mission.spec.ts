@@ -1,32 +1,53 @@
 import { test } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 
-// 🎯 Add the target web apps you want Scout to track here
+// 🎯 Target aviation web apps to track
 const TARGETS = [
-  { name: 'Threads', url: 'https://www.threads.net' },
-  { name: 'Airbnb', url: 'https://www.airbnb.com' }
+  { name: 'atc', url: 'https://www.atc.com/' },
+  { name: 'planefinder', url: 'https://planefinder.net/' }
 ];
 
 for (const app of TARGETS) {
   test(`Deploying Scout to analyze ${app.name}`, async ({ page }, testInfo) => {
-    const trackName = testInfo.project.name; // This will be 'scout-web' or 'scout-mobile'
-    
-    // 1. Dispatch Scout to the URL
+    // Parses out 'web' or 'mobile' from your project environment
+    const viewportType = testInfo.project.name.replace('scout-', ''); 
+    const formattedDate = new Date().toISOString().split('T')[0].replace(/-/g, '');
+
+    // Ensure the output directory exists locally
+    const outputDir = path.join(__dirname, '../tracked-screens');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // 🛠️ STATE 1: LANDING PAGE
+    // ──────────────────────────────────────────────────────────────
     await page.goto(app.url, { waitUntil: 'networkidle' });
     
-    // 2. Snap a full-page screenshot and save it into the correct Scout folder
-    await page.screenshot({ 
-      path: `./tracked-screens/${trackName}/${app.name}_01_landing.png`,
-      fullPage: true 
-    });
+    const landingName = `${app.name.toLowerCase()}-${viewportType}-landing-${formattedDate}.png`;
+    const localLandingPath = path.join(outputDir, landingName);
 
-    // 3. Optional: Look for a standard login button to click and capture a deeper state
+    await page.screenshot({ path: localLandingPath, fullPage: true });
+    console.log(`📸 Screenshot saved locally: ${landingName}`);
+
+    // ──────────────────────────────────────────────────────────────
+    // 🛠️ STATE 2: LOGIN STATE (WITH OVERLAY PROTECTION)
+    // ──────────────────────────────────────────────────────────────
     const loginBtn = page.locator('text=Log in').first();
     if (await loginBtn.isVisible()) {
-      await loginBtn.click();
-      await page.waitForTimeout(2000); // Give the UI a 2-second buffer to animate open
-      await page.screenshot({ 
-        path: `./tracked-screens/${trackName}/${app.name}_02_login_state.png` 
-      });
+      try {
+        await loginBtn.click({ force: true, timeout: 5000 });
+        await page.waitForTimeout(2000); 
+        
+        const loginStateName = `${app.name.toLowerCase()}-${viewportType}-loginstate-${formattedDate}.png`;
+        const localLoginPath = path.join(outputDir, loginStateName);
+
+        await page.screenshot({ path: localLoginPath });
+        console.log(`📸 Screenshot saved locally: ${loginStateName}`);
+      } catch (clickError) {
+        console.log(`⚠️ Skipping deeper click state for ${app.name}: Button action obstructed.`);
+      }
     }
   });
 }
